@@ -4,47 +4,28 @@ using UnityEngine;
 
 public class MenuButtonsHandler : MonoBehaviour
 {
-    //show elements for StoreButton
+    //hiding the elements for Store
+    public GameObject StartGameButton;
+    public GameObject RightArrowButton;
+    public GameObject LeftArrowButton;
+    public GameObject CraftMenuSelector;
 
-    //hide elements from Menu and Settings
-    //public GameObject[] elementsToHide;
-    public GameObject[] StartGameButton;
-    public GameObject[] RightArrowButton;
-    public GameObject[] LeftArrowButton;
-    public GameObject[] CraftMenuSelector;
-    //--------------------------------------------------------------------
-    //show elements for Home
+    //showing the elements for Store
+    public GameObject NoAddsButton;
+    public GameObject Option2;
+    public GameObject Option3;
+    public GameObject Option4;
+    public GameObject Option5;
+    public GameObject StoreButton;
+    public GameObject HomeButton;
+    public GameObject SettingsButton;
 
-    //hide elements from Store and Settigns
-    //--------------------------------------------------------------------
-    //show elements from Settings
-
-    //hide elements from Menu and Store
-    //--------------------------------------------------------------------
-    public void OnButtonClick()
+    //function for hiding the elements from Home
+    public void HideHomeElements()
     {
-/*        foreach (var elementToShow in elementsToShow)
-        {
-            elementToShow.SetActive(true);
-        }*/
-         
-        foreach (var StartGameButton in StartGameButton) //menu
-        {
-            StartGameButton.SetActive(false);
-        }
-
-        foreach (var RightArrowButton in RightArrowButton) //menu
-        {
-            RightArrowButton.SetActive(false);
-        }
-        foreach (var LeftArrowButton in LeftArrowButton) //menu
-        {
-            LeftArrowButton.SetActive(false);
-        }
-        foreach (var CraftMenuSelector in CraftMenuSelector) //menu
-        {
-            CraftMenuSelector.SetActive(false);
-        }
+        StartGameButton.SetActive(false);
+        RightArrowButton.SetActive(false);
+        LeftArrowButton.SetActive(false);
+        CraftMenuSelector.SetActive(false);
     }
-
 }
