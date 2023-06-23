@@ -28,4 +28,17 @@ public class MenuButtonsHandler : MonoBehaviour
         LeftArrowButton.SetActive(false);
         CraftMenuSelector.SetActive(false);
     }
+
+    //function for showing the elements from Store
+    public void ShowStoreElements()
+    {
+        NoAddsButton.SetActive(true);
+        Option2.SetActive(true);
+        Option3.SetActive(true);
+        Option4.SetActive(true);
+        Option5.SetActive(true);
+        StoreButton.SetActive(true);
+        HomeButton.SetActive(true);
+        SettingsButton.SetActive(true);
+    }
 }
