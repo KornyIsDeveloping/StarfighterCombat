@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,11 +11,9 @@ public class MenuButtonsHandler : MonoBehaviour
     public GameObject CraftMenuSelector;
 
     //showing the elements for Store
-    public GameObject NoAddsButton;
-    public GameObject Option2;
-    public GameObject Option3;
-    public GameObject Option4;
-    public GameObject Option5;
+    public GameObject RemoveAdsPannel;
+    public GameObject StarterPackPannel;
+    public GameObject BuyCoinsPannel;
     public GameObject StoreButton;
     public GameObject HomeButton;
     public GameObject SettingsButton;
@@ -32,13 +30,12 @@ public class MenuButtonsHandler : MonoBehaviour
     //function for showing the elements from Store
     public void ShowStoreElements()
     {
-        NoAddsButton.SetActive(true);
-        Option2.SetActive(true);
-        Option3.SetActive(true);
-        Option4.SetActive(true);
-        Option5.SetActive(true);
+        RemoveAdsPannel.SetActive(true);
+        StarterPackPannel.SetActive(true);
+        BuyCoinsPannel.SetActive(true);
         StoreButton.SetActive(true);
         HomeButton.SetActive(true);
         SettingsButton.SetActive(true);
     }
 }
+*/
