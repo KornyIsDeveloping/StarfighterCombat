@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CanvasController : MonoBehaviour
 {
-    public Canvas canvas;
+    public Canvas MainMenuCanvas;
+    public Canvas StoreMenuCanvas;
 
-    public void HideCanvas()
+    public void ShowMainMenu()
     {
-        canvas.enabled = false;
+        MainMenuCanvas.gameObject.SetActive(true);
+        StoreMenuCanvas.gameObject.SetActive(false);
     }
 
-    public void ShowCanvas()
+    public void ShowStoreMenu()
     {
-        canvas.enabled = true;
+        MainMenuCanvas.gameObject.SetActive(false);
+        StoreMenuCanvas.gameObject.SetActive(true);
     }
 }
