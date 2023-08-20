@@ -4030,6 +4030,7 @@ GameObject:
   - component: {fileID: 1344778689}
   - component: {fileID: 1344778688}
   - component: {fileID: 1344778687}
+  - component: {fileID: 1344778690}
   m_Layer: 5
   m_Name: LeftArrowButton
   m_TagString: Untagged
@@ -4151,6 +4152,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1344778685}
   m_CullTransparentMesh: 1
+--- !u!114 &1344778690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344778685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f135336b9bca884d962f08645032e6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftSelectionManager: {fileID: 0}
 --- !u!1 &1372117948
 GameObject:
   m_ObjectHideFlags: 0
@@ -6649,6 +6663,7 @@ GameObject:
   - component: {fileID: 1966362571}
   - component: {fileID: 1966362570}
   - component: {fileID: 1966362569}
+  - component: {fileID: 1966362572}
   m_Layer: 5
   m_Name: RightArrowButton
   m_TagString: Untagged
@@ -6770,6 +6785,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1966362567}
   m_CullTransparentMesh: 1
+--- !u!114 &1966362572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966362567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f135336b9bca884d962f08645032e6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftSelectionManager: {fileID: 0}
 --- !u!1 &2029683388
 GameObject:
   m_ObjectHideFlags: 0
