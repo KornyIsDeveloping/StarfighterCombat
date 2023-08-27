@@ -17,8 +17,21 @@ public class MenuController : MonoBehaviour
     public string[] names;
     public Button nextButton;
     public Button previousButton;
+    public GameObject[] craftPrefabs; //add this line for the craft prefabs array.
 
     private int currentIndex = 0;
+
+    public void StartGame()
+    {
+        if (currentIndex >= 0 && currentIndex < craftPrefabs.Length)
+        {
+            DataManager.Instance.selectedCraftPrefab = craftPrefabs[currentIndex];
+            Debug.Log("Selected Craft: " + craftPrefabs[currentIndex].name);
+        }
+
+        //transition to the Game scene
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+    }
 
     private void Start()
     {
@@ -40,6 +53,9 @@ public class MenuController : MonoBehaviour
         {
             rightArrowButton.interactable = false; //disable the right arrow button
         }
+
+        //add this line to set the initial craft prefab.
+        DataManager.Instance.selectedCraftPrefab = craftPrefabs[currentIndex]; 
     }
 
     public void NextImage()
@@ -57,6 +73,9 @@ public class MenuController : MonoBehaviour
         {
             rightArrowButton.gameObject.SetActive(false); // hide the right arrow button
         }
+
+        //add this line to update the selected craft prefab.
+        DataManager.Instance.selectedCraftPrefab = craftPrefabs[currentIndex]; 
     }
 
     public void PreviousImage()
@@ -72,6 +91,9 @@ public class MenuController : MonoBehaviour
         {
             leftArrowButton.gameObject.SetActive(false); // hide the left arrow button
         }
+
+        //add this line to update the selected craft prefab.
+        DataManager.Instance.selectedCraftPrefab = craftPrefabs[currentIndex]; 
     }
         
     private void UpdateMenu()
@@ -84,6 +106,9 @@ public class MenuController : MonoBehaviour
             craftNameText.text = names[currentIndex];
             craftLevelText.text = craftLevels[currentIndex];
         }
+
+        //add this line to ensure the DataManager is always up-to-date.
+        DataManager.Instance.selectedCraftPrefab = craftPrefabs[currentIndex]; 
     }
     
 }
