@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 531203059}
-  uiParent: {fileID: 0}
+  background: {fileID: 1976489389}
 --- !u!4 &934017050
 Transform:
   m_ObjectHideFlags: 0
