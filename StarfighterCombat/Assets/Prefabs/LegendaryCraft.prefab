@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6531434955734836542}
   - component: {fileID: 6531434955734836540}
   - component: {fileID: 6531434955734836543}
+  - component: {fileID: 2018215828987014049}
   m_Layer: 5
   m_Name: LegendaryCraft
   m_TagString: Untagged
@@ -76,3 +77,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2018215828987014049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531434955734836513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5e75a6282dc9504c94897c17c7e8a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
