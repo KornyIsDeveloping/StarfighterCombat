@@ -13,7 +13,7 @@ public class CraftController : MonoBehaviour
 
     private bool moveLeft = false;
     private bool moveRight = false;
-    private float movementSpeed = 150f; 
+    private float movementSpeed = 500f; 
 
     private void Awake()
     {
