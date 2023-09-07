@@ -1,191 +1,100 @@
-/*using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
-[RequireComponent(typeof(RectTransform))]
-public class CraftController : MonoBehaviour
-{
-    private bool isBeingTouched = false;
-    private RectTransform rectTransform;
-    private Canvas canvas;
-
-    private void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-        canvas = FindObjectOfType<Canvas>();
-    }
-
-    private void Update()
-    {
-        if (SceneManager.GetActiveScene().name == "Game")
-        {
-            HandleDrag();
-
-            // If you have other functionalities, you can call them here:
-            // HandleShooting();
-            // HandleAbilities();
-            // etc.
-        }
-    }
-
-    private void HandleDrag()
-    {
-        //handle touch controls
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            switch (touch.phase)
-            {
-                case TouchPhase.Began:
-                    if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, touch.position, null))
-                    {
-                        isBeingTouched = true;
-                    }
-                    break;
-
-                case TouchPhase.Moved:
-                    if (isBeingTouched)
-                    {
-                        MoveCraftToPosition(touch.position);
-                    }
-                    break;
-
-                case TouchPhase.Ended:
-                case TouchPhase.Canceled:
-                    isBeingTouched = false;
-                    break;
-            }
-        }
-
-        //handle mouse controls
-        else if (Input.GetMouseButton(0))
-        {
-            MoveCraftToPosition(Input.mousePosition);
-        }
-    }
-
-    private void MoveCraftToPosition(Vector2 position)
-    {
-        Vector2 localPoint;
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), position, canvas.worldCamera, out localPoint))
-        {
-            rectTransform.anchoredPosition = localPoint;
-        }
-    }
-
-    // Add other methods for different functionalities below.
-}
-*/
-
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
 public class CraftController : MonoBehaviour
 {
-    private bool isBeingTouched = false;
-    private bool hasValidDragStart = false;
-    private RectTransform rectTransform;
-    private Canvas canvas;
-    private Vector2 touchStartOffset; // To store the difference between the touch start point and the object's position
+    public Button leftMovementButton;
+    public Button rightMovementButton;
+
+    private bool moveLeft = false;
+    private bool moveRight = false;
+    private float movementSpeed = 150f; 
 
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
-        canvas = FindObjectOfType<Canvas>();
+        //check if buttons are assigned and add listeners to them
+        if (leftMovementButton)
+            leftMovementButton.onClick.AddListener(StartMovingLeft);
+
+        if (rightMovementButton)
+            rightMovementButton.onClick.AddListener(StartMovingRight);
     }
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name == "Game")
+        if (moveLeft)
         {
-            HandleDrag();
-
-            // If you have other functionalities, you can call them here:
-            // HandleShooting();
-            // HandleAbilities();
-            // etc.
+            //move craft to the left
+            transform.Translate(-movementSpeed * Time.deltaTime, 0, 0);
+        }
+        else if (moveRight)
+        {
+            //move craft to the right
+            transform.Translate(movementSpeed * Time.deltaTime, 0, 0);
         }
     }
 
-    private void HandleDrag()
+    //setting up OnPointerDown and OnPointerUp events for the buttons.
+    public void SetMovementButtons(Button left, Button right)
     {
-        // Handle touch controls
-        if (Input.touchCount > 0)
+        if (left)
         {
-            Touch touch = Input.GetTouch(0);
+            leftMovementButton = left;
+            EventTrigger leftTrigger = leftMovementButton.gameObject.AddComponent<EventTrigger>();
 
-            switch (touch.phase)
-            {
-                case TouchPhase.Began:
-                    if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, touch.position, null))
-                    {
-                        isBeingTouched = true;
+            EventTrigger.Entry pointerDownEntryLeft = new EventTrigger.Entry();
+            pointerDownEntryLeft.eventID = EventTriggerType.PointerDown;
+            pointerDownEntryLeft.callback.AddListener((data) => { StartMovingLeft(); });
+            leftTrigger.triggers.Add(pointerDownEntryLeft);
 
-                        if (!hasValidDragStart)
-                        {
-                            Vector2 localTouchStartPoint;
-                            RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, touch.position, canvas.worldCamera, out localTouchStartPoint);
-                            touchStartOffset = rectTransform.anchoredPosition - localTouchStartPoint;
-                            hasValidDragStart = true;
-                        }
-                    }
-                    break;
-
-                case TouchPhase.Moved:
-                    if (isBeingTouched)
-                    {
-                        MoveCraftToPosition(touch.position + touchStartOffset);  // Apply the offset here
-                    }
-                    break;
-
-                case TouchPhase.Ended:
-                case TouchPhase.Canceled:
-                    isBeingTouched = false;
-                    hasValidDragStart = false;
-                    break;
-            }
+            EventTrigger.Entry pointerUpEntryLeft = new EventTrigger.Entry();
+            pointerUpEntryLeft.eventID = EventTriggerType.PointerUp;
+            pointerUpEntryLeft.callback.AddListener((data) => { StopMoving(); });
+            leftTrigger.triggers.Add(pointerUpEntryLeft);
         }
 
-        // Handle mouse controls
-        else if (Input.GetMouseButton(0))
+        if (right)
         {
-            Vector2 mousePosition = Input.mousePosition;
-            if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, mousePosition, null) && !isBeingTouched)
-            {
-                isBeingTouched = true;
+            rightMovementButton = right;
+            EventTrigger rightTrigger = rightMovementButton.gameObject.AddComponent<EventTrigger>();
 
-                if (!hasValidDragStart)
-                {
-                    Vector2 localMouseStartPoint;
-                    RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, mousePosition, canvas.worldCamera, out localMouseStartPoint);
-                    touchStartOffset = rectTransform.anchoredPosition - localMouseStartPoint;
-                    hasValidDragStart = true;
-                }
-            }
+            EventTrigger.Entry pointerDownEntryRight = new EventTrigger.Entry();
+            pointerDownEntryRight.eventID = EventTriggerType.PointerDown;
+            pointerDownEntryRight.callback.AddListener((data) => { StartMovingRight(); });
+            rightTrigger.triggers.Add(pointerDownEntryRight);
 
-            if (isBeingTouched)
-                MoveCraftToPosition(mousePosition + touchStartOffset); // Apply the offset here
-        }
-        else
-        {
-            isBeingTouched = false;
-            hasValidDragStart = false;
+            EventTrigger.Entry pointerUpEntryRight = new EventTrigger.Entry();
+            pointerUpEntryRight.eventID = EventTriggerType.PointerUp;
+            pointerUpEntryRight.callback.AddListener((data) => { StopMoving(); });
+            rightTrigger.triggers.Add(pointerUpEntryRight);
         }
     }
 
-    private void MoveCraftToPosition(Vector2 position)
+    //called when the left button is pressed
+    public void StartMovingLeft()
     {
-        Vector2 localPoint;
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), position, canvas.worldCamera, out localPoint))
-        {
-            rectTransform.anchoredPosition = localPoint;
-        }
+        moveLeft = true;
+        moveRight = false; //ensure we're not moving right if the left button is pressed
     }
 
-    // Add other methods for different functionalities below.
+    //called when the right button is pressed
+    public void StartMovingRight()
+    {
+        Debug.Log("Right Button Clicked");
+        moveRight = true;
+        moveLeft = false; //ensure we're not moving left if the right button is pressed
+    }
+
+    // Optional: If you want to stop moving when the button is released
+    public void StopMoving()
+    {
+        Debug.Log("Left Button Clicked");  
+        moveLeft = false;
+        moveRight = false;
+    }
 }
