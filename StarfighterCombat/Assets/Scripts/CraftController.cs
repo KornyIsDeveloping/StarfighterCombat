@@ -13,30 +13,85 @@ public class CraftController : MonoBehaviour
 
     private bool moveLeft = false;
     private bool moveRight = false;
-    private float movementSpeed = 500f; 
+    private float movementSpeed = 650f;
+    private float minX, maxX; //calculating the half-width of the craft 
 
     private void Awake()
     {
         //check if buttons are assigned and add listeners to them
+        //if (leftMovementButton)
+        //leftMovementButton.onClick.AddListener(StartMovingLeft);
+
+        //if (rightMovementButton)
+        //rightMovementButton.onClick.AddListener(StartMovingRight);
+
+        //implementing the boundaries for the craft movement
+        /* Vector3 corner1 = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane));
+         Vector3 corner2 = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
+
+         float craftHalfWidth = GetComponent<RectTransform>().rect.width / 2;
+         minX = corner1.x + craftHalfWidth;
+         maxX = corner2.x - craftHalfWidth;
+
+         GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f); //set pivot to center
+
+         float craftHalfWidth = GetComponent<RectTransform>().rect.width / 2;
+         minX = corner1.x + craftHalfWidth;
+         maxX = corner2.x - craftHalfWidth;*/
+
+
         if (leftMovementButton)
             leftMovementButton.onClick.AddListener(StartMovingLeft);
 
         if (rightMovementButton)
             rightMovementButton.onClick.AddListener(StartMovingRight);
+
+        //implementing the boundaries for the craft movement
+        Vector3 corner1 = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane));
+        Vector3 corner2 = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
+
+        GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f); //set pivot to center
+
+        float craftHalfWidth = GetComponent<RectTransform>().rect.width / 2;
+        minX = corner1.x + craftHalfWidth;
+        maxX = corner2.x - craftHalfWidth;
     }
 
     private void Update()
     {
+        Vector3 targetPos = transform.position;
+
         if (moveLeft)
         {
+            //targetPos.x -= movementSpeed * Time.deltaTime;
+
+            targetPos = transform.position + new Vector3(-movementSpeed * Time.deltaTime, 0, 0);
+
             //move craft to the left
-            transform.Translate(-movementSpeed * Time.deltaTime, 0, 0);
+            //transform.Translate(-movementSpeed * Time.deltaTime, 0, 0);
         }
         else if (moveRight)
         {
+            //targetPos.x += movementSpeed * Time.deltaTime;
+
+            targetPos = transform.position + new Vector3(movementSpeed * Time.deltaTime, 0, 0);
+
             //move craft to the right
-            transform.Translate(movementSpeed * Time.deltaTime, 0, 0);
+            //transform.Translate(movementSpeed * Time.deltaTime, 0, 0);
         }
+
+        //smoothly interpolate between the current position and the target position
+        //transform.position = Vector3.Lerp(transform.position, targetPos, lerpSpeed * Time.deltaTime);
+
+        //clamp the craft's x position
+        //Vector3 pos = transform.position;
+        //pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        //transform.position = pos;
+
+        transform.position = Vector3.Lerp(transform.position, targetPos, lerpSpeed * Time.deltaTime);
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        transform.position = pos;
     }
 
     //setting up OnPointerDown and OnPointerUp events for the buttons.
