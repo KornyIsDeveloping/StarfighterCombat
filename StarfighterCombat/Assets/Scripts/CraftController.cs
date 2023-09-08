@@ -15,6 +15,7 @@ public class CraftController : MonoBehaviour
     private bool moveRight = false;
     private float movementSpeed = 650f;
     private float minX, maxX; //calculating the half-width of the craft 
+    public float lerpSpeed = 10f; //smooth movement speed
 
     private void Awake()
     {
